@@ -1,46 +1,17 @@
 <?php
+    include "./file_indexer.php";
 
+    $json = $_SERVER["QUERY_STRING"] ?? '';
 
-$json = $_SERVER["QUERY_STRING"] ?? '';
+    $python = FileIndexer::scripts('py');
+    $php = FileIndexer::scripts('php');
+    $js = FileIndexer::scripts('js');
 
-$files = scandir("scripts/");
-
-unset($files[0]);
-unset($files[1]);
-print_r($files);
-exit;
-$output = [];
-
-foreach($files as $file){
-
-    $extension = explode('.', $file);
-
-    switch($extension[1]){
-        case 'php':
-            $startScript = "php";
-            break;
-        case 'js':
-            $startScript = "node";
-            break;
-        case 'py':
-            $startScript = "python";
-            break;
+    if(function_exists('exec')){
+        echo 'Exec is enabled';
+        echo exec('php test_scripts/server_running.php');
+        echo exec('node test_scripts/server_running.py');
+        echo exec('python test_scripts/server_running.js');
     }
-
-    $f = exec($startScript . " scripts/".$file);
-    $output[] = ['content' => $f, 'status' => testFileContent()];
-}
-
-function testFileContent($string){
-    if(preg_match('/^Hello\sWorld[,|.|!]*\sthis\sis\s[a-zA-Z]{2,}\s[a-zA-Z]{2,}(\s[a-zA-Z]{2,})?\swith\sHNGi7\sID\s(HNG-\d{3,})\susing\s[a-zA-Z]{3,}\sfor\sstage\s2\stask.?$/i',trim($string))){
-        return 'Pass';
-    }
-
-    return 'Fail';
-}
-
-function can_run_command($module = ''){
-    return exec($module);
-}
-
+    exit;
 
