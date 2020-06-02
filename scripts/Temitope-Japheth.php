@@ -1,7 +1,7 @@
 
 <?php
 
-print "Hello, This is Temitope Japheth with HNGi7 ID: HNG-04757 using php for stage 2 task!";
+print "Hello World, this is Temitope Japheth with HNGi7 ID HNG-04757 using PHP for stage 2 task";
 
 ?>
 
