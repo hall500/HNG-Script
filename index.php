@@ -21,6 +21,7 @@ foreach($files as $file){
             $startScript = "node";
             break;
         case 'py':
+            $startScript = "python";
             break;
     }
 
