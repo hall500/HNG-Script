@@ -1,5 +1,8 @@
 <?php
 
+
+$json = $_SERVER["QUERY_STRING"] ?? '';
+
 $files = scandir("scripts/");
 
 unset($files[0]);
@@ -10,10 +13,9 @@ $output = [];
 
 foreach($files as $file){
 
-    $extension = explode('.', $file)[1];
+    $extension = explode('.', $file);
 
-
-    switch($extension){
+    switch($extension[1]){
         case 'php':
             $startScript = "php";
             break;
@@ -21,6 +23,7 @@ foreach($files as $file){
             $startScript = "node";
             break;
         case 'py':
+            $startScript = "python";
             break;
     }
 
@@ -28,8 +31,12 @@ foreach($files as $file){
     $output[] = ['content' => $f, 'status' => testFileContent()];
 }
 
-function testFileContent(){
-    return 'pass';
+function testFileContent($string){
+    if(preg_match('/^Hello\sWorld[,|.|!]*\sthis\sis\s[a-zA-Z]{2,}\s[a-zA-Z]{2,}(\s[a-zA-Z]{2,})?\swith\sHNGi7\sID\s(HNG-\d{3,})\susing\s[a-zA-Z]{3,}\sfor\sstage\s2\stask.?$/i',trim($string))){
+        return 'Pass';
+    }
+
+    return 'Fail';
 }
 
 function can_run_command($module = ''){
@@ -37,4 +44,3 @@ function can_run_command($module = ''){
 }
 
 
-var_dump($output);
