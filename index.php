@@ -1,11 +1,11 @@
 <?php
 
-
 $files = scandir("scripts/");
-
 
 unset($files[0]);
 unset($files[1]);
+print_r($files);
+exit;
 $output = [];
 
 foreach($files as $file){
@@ -25,14 +25,15 @@ foreach($files as $file){
     }
 
     $f = exec($startScript . " scripts/".$file);
-
-
     $output[] = ['content' => $f, 'status' => testFileContent()];
-
 }
 
 function testFileContent(){
     return 'pass';
+}
+
+function can_run_command($module = ''){
+    return exec($module);
 }
 
 
