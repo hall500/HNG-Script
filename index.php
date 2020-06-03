@@ -3,34 +3,36 @@
 
     $json = $_SERVER["QUERY_STRING"] ?? '';
 
-    $data = [];
+    /* 
+    * Add New Commands Here, 
+    * Format: file_type => command
+    */
+    $commands = [
+    ];
+
+    /*
+    * Instantiating a Single Instance of the FileIndexer Class 
+     */
+    $indexer = FileIndexer::instance();
+    $indexer->addCommands($commands);
 
     if(function_exists('exec')){
-        print "Exec is enabled\n";
-
-        $output = FileIndexer::computeFiles('php');
-        print_r($output);
-        echo "\n";
-        $output = FileIndexer::computeFiles('py');
-        print_r($output);
-        $output = FileIndexer::computeFiles('js');
-        print_r($output);
+        echo "<pre>";
+        //print "Exec is enabled\n";
+        $output = $indexer->computeFiles('go');
+        print_r(json_encode($output));
+        
+        /* $output = $indexer->computeFiles('py');
+        print_r(json_encode($output)); */
+        /* $output = $indexer->computeFiles('js');
+        print_r(json_encode($output));
+        flush();
+        ob_flush();
+        time_nanosleep(2, 1000); */
+        echo "</pre>";
         exit;
     }
 
-    function testFileContent($string) {
-        if (preg_match('/^Hello\sWorld[,|.|!]?\sthis\sis\s[a-zA-Z]{2,}\s[a-zA-Z]{2,}(\s[a-zA-Z]{2,})?\swith\sHNGi7\sID\s(HNG-\d{3,})\susing\s[a-zA-Z|#]{2,}\sfor\sstage\s2\stask.?$/i', trim($string))) {
-            return 'Pass';
-        }
+    
 
-        return 'Fail';
-    }
-
-    if($json){
-
-        print_r(json_encode($data));
-        exit;
-    }
-
-    echo 'HTML text here';
-
+    print 'HTML text here';
