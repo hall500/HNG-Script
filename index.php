@@ -8,6 +8,7 @@
     * Format: file_type => command
     */
     $commands = [
+        'java' => 'java '
     ];
 
     /*
@@ -19,16 +20,14 @@
     if(function_exists('exec')){
         echo "<pre>";
         //print "Exec is enabled\n";
-        $output = $indexer->computeFiles('go');
+        $output = $indexer->computeFiles('php');
         print_r(json_encode($output));
         
-        /* $output = $indexer->computeFiles('py');
-        print_r(json_encode($output)); */
-        /* $output = $indexer->computeFiles('js');
+        $output = $indexer->computeFiles('py');
         print_r(json_encode($output));
-        flush();
-        ob_flush();
-        time_nanosleep(2, 1000); */
+        
+        $output = $indexer->computeFiles('js');
+        print_r(json_encode($output));
         echo "</pre>";
         exit;
     }
